@@ -11,7 +11,9 @@ package calculadora;
 public class VistaCalculadora extends javax.swing.JFrame {
     Calculadora calculadora= new Calculadora();
     StringBuilder sb= new StringBuilder();
-        String op;
+    String op;
+    String entrada;
+    double resp=0;
     
     /**
      * Creates new form VistaCalculadora
@@ -50,11 +52,12 @@ public class VistaCalculadora extends javax.swing.JFrame {
         divB = new javax.swing.JButton();
         calcB = new javax.swing.JButton();
         PantallaT = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         num1B.setText("1");
         num1B.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -194,10 +197,28 @@ public class VistaCalculadora extends javax.swing.JFrame {
 
         calcB.setText("Calcular");
         calcB.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        calcB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calcBActionPerformed(evt);
+            }
+        });
 
+        PantallaT.setEditable(false);
+        PantallaT.setBackground(new java.awt.Color(204, 204, 204));
+        PantallaT.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         PantallaT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PantallaTActionPerformed(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        jButton1.setText("AC");
+        jButton1.setActionCommand("AC");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -210,33 +231,39 @@ public class VistaCalculadora extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(PantallaT)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(masmenB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(calcB, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(num9B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(num5B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(num1B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(masB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(num2B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(menosB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(num6B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(num0B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
+                            .addComponent(masB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(masmenB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(porB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(num3B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(num7B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(num8B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(num4B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(divB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(num2B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(menosB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(num6B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(num0B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(calcB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(porB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(num3B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(num7B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(37, 37, 37)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(num8B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(num4B, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(divB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(91, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -279,10 +306,11 @@ public class VistaCalculadora extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(calcB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(masmenB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(calcB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(masmenB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -295,20 +323,20 @@ public class VistaCalculadora extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void num1BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num1BActionPerformed
-          sb.append("1");    
+          sb.append("1 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num1BActionPerformed
 
     private void masBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masBActionPerformed
-          sb.append("+");    
+          sb.append("+ ");    
           PantallaT.setText(sb.toString());
     }//GEN-LAST:event_masBActionPerformed
 
@@ -317,92 +345,118 @@ public class VistaCalculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_PantallaTActionPerformed
 
     private void divBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divBActionPerformed
-          sb.append("/");    
+          sb.append("/ ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_divBActionPerformed
 
     private void menosBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menosBActionPerformed
-          sb.append("-");    
+          sb.append("- ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_menosBActionPerformed
 
     private void porBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_porBActionPerformed
-          sb.append("*");    
+          sb.append("* ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_porBActionPerformed
 
     private void num2BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num2BActionPerformed
-          sb.append("2");    
+          sb.append("2 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num2BActionPerformed
 
     private void num3BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num3BActionPerformed
-          sb.append("3");    
+          sb.append("3 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num3BActionPerformed
 
     private void num4BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num4BActionPerformed
-          sb.append("4");    
+          sb.append("4 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num4BActionPerformed
 
     private void num5BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num5BActionPerformed
-          sb.append("5");    
+          sb.append("5 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num5BActionPerformed
 
     private void num6BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num6BActionPerformed
-          sb.append("6");    
+          sb.append("6 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num6BActionPerformed
 
     private void num7BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num7BActionPerformed
-          sb.append("7");    
+          sb.append("7 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num7BActionPerformed
 
     private void num8BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num8BActionPerformed
-          sb.append("8");    
+          sb.append("8 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num8BActionPerformed
 
     private void num9BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num9BActionPerformed
-          sb.append("9");    
+          sb.append("9 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num9BActionPerformed
 
     private void num0BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num0BActionPerformed
-          sb.append("0");    
+          sb.append("0 ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_num0BActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-          sb.append("(");    
+          sb.append("( ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-          sb.append(")");    
+          sb.append(") ");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void masmenBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masmenBActionPerformed
+           sb.append("-");    
+          PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_masmenBActionPerformed
+
+    private void calcBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcBActionPerformed
+        entrada=PantallaT.getText();        
+        calculadora.setEntrada(entrada);
+        sb.delete(0, sb.length())  ;
+        
+         try{
+        if(calculadora.calcula()){
+        resp=calculadora.getResultado();
+        PantallaT.setText(Double.toString(resp));
+        }else 
+            PantallaT.setText("error");
+         }catch(Exception e){
+        PantallaT.setText("error");
+            }
+    
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calcBActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        sb.delete(0, sb.length())  ; 
+        PantallaT.setText(sb.toString());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -443,6 +497,7 @@ public class VistaCalculadora extends javax.swing.JFrame {
     private javax.swing.JTextField PantallaT;
     private javax.swing.JButton calcB;
     private javax.swing.JButton divB;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JPanel jPanel1;
