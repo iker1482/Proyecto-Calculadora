@@ -9,6 +9,7 @@ package calculadora;
  * del problema.
  * La calculadora sólo tiene 2 atributos: uno para almacenar la expresión original
  * y el segundo para almacenar el resultado, en caso de que la expresión pueda evaluarse.
+ * Como no se conoce la expresión a calcular, el atributo de entrada tiene un set y un get.
  */
 public class Calculadora {
     private String entrada;  // Es una expresión dada en notación infija
@@ -185,4 +186,5 @@ public class Calculadora {
         }
           return pila.pop();            
         }    
+
 }
