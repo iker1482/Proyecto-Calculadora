@@ -2,7 +2,8 @@
 package calculadora;
 
 /**
- 
+ * @author Iker Aboitiz, Francisco Pérez, Elías Penhos, Emiliano Cervantez
+ * @version 1.0
  * La clase representa de manera muy simplificada una calculadora que puede convertir
  * una expresión dada en notación prefija a notación postfija y, posteriormente, 
  * evaluarla. Se usan las pilas como estructuras de datos auxiliares a la solución
@@ -18,24 +19,35 @@ public class Calculadora {
     public Calculadora() {
     }
     
-    // Se construye un objeto tipo calculadora y se le asigna un valor a la expresión infija
+    /** 
+    * Se construye un objeto tipo calculadora y se le asigna un valor a la expresión infija}
+    * @param entrada La expresión a calcular
+    */
     public Calculadora(String entrada) {
         this.entrada = entrada;
     }
 
-    // Método para cambiar el valor de la expresión que se evaluará por medio de la calculadora
+    /** 
+    * Método para cambiar el valor de la expresión que se evaluará por medio de la calculadora
+    * @param entrada La nueva expresión a calcular
+    */
     public void setEntrada(String entrada) {
         this.entrada = entrada;
     }
     
-    // Método para obtener el resultado
+    /** 
+    * Método para obtener el resultado
+    * @return El resultado
+    */
     public double getResultado(){
         return resultado;
     }
     
-    /* Método que tiene el control de las operaciones que lleva a cabo la calculadora
+    /** 
+     * Método que tiene el control de las operaciones que lleva a cabo la calculadora
      * para evaluar la expresión. Si la expresión se puede evaluar deja el resultado en
      * el atributo resultado y regresa true. En caso contrario regresa false.
+     * @return Si la expresión ya fue calculada
      */
     public boolean calcula(){
         boolean resp;
@@ -49,10 +61,12 @@ public class Calculadora {
         return resp;
     }
     
-    /* Método auxiliar que revisa si la expresión dada en notación infija tiene los 
+    /**
+     * Método auxiliar que revisa si la expresión dada en notación infija tiene los 
      * paréntesis bien balanceados. Es decir, si el número de paréntesis izquierdos 
      * concuerda con el número de paréntesis derechos.
      * Utiliza un objeto tipo PilaE para almacenar los paréntesis izquierdos temporalmente.
+     * @return Si los paréntesis están bien balanceados y si la pila auxiliar no tiene paréntesis
      */
     private boolean revisa(){
         PilaADT<Character> pila = new PilaA();
@@ -76,18 +90,23 @@ public class Calculadora {
         return resp && pila.isEmpty();
     }
     
-    /* Método auxiliar que permite separar -por medio del método split() de la clase String
+    /**
+     * Método auxiliar que permite separar -por medio del método split() de la clase String
      * de Java- la cadena dada y guarda cada uno de sus elementos (operadores, operandos 
      * y paréntesis) en un arreglo de cadenas.
+     * @return La expresion en un arreglo
      */ 
     private String[] obtieneTokens(){
       return entrada.split(" ");
     }
     
-    /* Método auxiliar que recibe un arreglo de cadenas que representa a una cadena en
+    /** 
+     * Método auxiliar que recibe un arreglo de cadenas que representa a una cadena en
      * notación infija y regresa otro arreglo con la misma expresión pero ahora en
      * notación postfija. Usa un objeto tipo PilaE para almacenar temporalemente algunos
      * elementos de la expresión. 
+     * @param La lista de elementos de la expresión no postfija
+     * @return La lista de elementos de la expresion postfija
      */        
     private String[] conviertePostfija(String elementos[]){
         String postfija[] = new String[elementos.length];
@@ -129,14 +148,21 @@ public class Calculadora {
         return postfija;
     }
     
-    // Método auxiliar que regresa true si la cadena recibida no es un operador
+    /**
+    * Método auxiliar que regresa true si la cadena recibida no es un operador
+    * @param Un dato de la expresión
+    * @return Si el dato no es un operador
+    */
     private boolean noEsOperador(String dato){
         return !dato.equals("+") && !dato.equals("-") && !dato.equals("*") && !dato.equals("/");
     }
     
-    /* Método auxiliar para el manejo de las prioridades de los operadores. Regresa 0,
+    /** 
+     * Método auxiliar para el manejo de las prioridades de los operadores. Regresa 0,
      * el valor más pequeño, cuando el dato dado es un "(". De esta manera
      * el "(" sólo se saca de la pila cuando se encuentre un ")".
+     * @param Un dato de la expresión
+     * @return La prioridad del operador de 0-2
      */
     private int prioridad(String dato){
         int resultado = 0; // En caso de que el dato sea un paréntesis izquierdo
@@ -151,10 +177,12 @@ public class Calculadora {
         return resultado;
     }
     
-    /* Método auxiliar para evaluar una expresión dada en notación postfija.
+    /**
+     * Método auxiliar para evaluar una expresión dada en notación postfija.
      * Usa un objeto tipo PilaE para almacenar temporalmente los operandos y los 
      * resultados parciales que se van obteniendo. 
-     * Regresa un dato tipo double.
+     * @param La lista de la expresion postfija
+     * @return El resultado de la expresión a calcular
      */
     private double evalúa(String postfija[]){
         PilaADT<Double> pila = new PilaA();
