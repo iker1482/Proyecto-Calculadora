@@ -5,8 +5,8 @@
 package calculadora;
 
 /**
- *
- * @author ikerab
+ * @author Iker Aboitiz, Francisco Pérez, Elías Penhos, Emiliano Cervantez
+ * @version 1.0
  */
 public class VistaCalculadora extends javax.swing.JFrame {
     Calculadora calculadora= new Calculadora();
