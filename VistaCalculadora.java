@@ -432,7 +432,7 @@ public class VistaCalculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-          sb.append(") ");    
+          sb.append(" )");    
           PantallaT.setText(sb.toString());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton12ActionPerformed
